@@ -26,6 +26,12 @@ class SSI_Class:
 		elif first_word == 'Moderator':
 			self._presenter_title = "Moderator:"
 			self._presenters = after_first
+		elif first_word == 'Organizer':
+			self._presenter_title = "Organizer:"
+			self._presenters = after_first
+		elif first_word == 'Host':
+			self._presenter_title = "Host:"
+			self._presenters = after_first
 		else:
 			self._presenter_title = first_word
 			self._presenters = after_first
@@ -104,9 +110,11 @@ class SSI_ClassList:
 # dictionary for routing a line to the appropriate SSI_Class attribute
 ssi_class_attrs = {
 	'title:':		SSI_Class.set_title,
+	'host:':		SSI_Class.set_presenters,
 	'moderator:':	SSI_Class.set_presenters,
 	'presenter:':	SSI_Class.set_presenters,
 	'presenters:':	SSI_Class.set_presenters,
+	'organizer:':	SSI_Class.set_presenters,
 	'tour':			SSI_Class.set_presenters,
 	'location:':	SSI_Class.set_location,
 	'class':		SSI_Class.set_description,
