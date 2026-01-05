@@ -20,14 +20,14 @@ class SSI_Class:
 		self._empty = False
 
 	_presenter_specs = {
-		'Tour':         ('Tour Guide:',     'after_first.split(" ", 1)[1]'),
-		'Moderator':    ('Moderator:',      'after_first'),
-		'Organizer':    ('Organizer:',      'after_first'),
-		'Host':         ('Host:',           'after_first')
+		'tour':         ('Tour Guide:',     'after_first.split(" ", 1)[1]'),
+		'moderator':    ('Moderator:',      'after_first'),
+		'organizer':    ('Organizer:',      'after_first'),
+		'host':         ('Host:',           'after_first')
 	}
 
 	def set_presenters(self, first_word, after_first):
-		presenter_spec = SSI_Class._presenter_specs.get(first_word)
+		presenter_spec = SSI_Class._presenter_specs.get(first_word.lower())
 			# get() returns None instead of raising KeyError if key not present
 		if presenter_spec is not None:
 			self._presenter_title = presenter_spec[0]
