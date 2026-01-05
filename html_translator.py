@@ -28,6 +28,7 @@ class SSI_Class:
 
 	def set_presenters(self, first_word, after_first):
 		presenter_spec = SSI_Class._presenter_specs.get(first_word)
+			# get() returns None instead of raising KeyError if key not present
 		if presenter_spec is not None:
 			self._presenter_title = presenter_spec[0]
 			self._presenters = eval(presenter_spec)[1]
