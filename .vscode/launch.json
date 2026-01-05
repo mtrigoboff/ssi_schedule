@@ -5,6 +5,13 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "current python file",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${file}",
+			"console": "integratedTerminal"
+		},
+		{
 			"name": "no args",
 			"type": "debugpy",
 			"request": "launch",
@@ -17,7 +24,9 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/html_translator.py",
 			"console": "integratedTerminal",
-			"args": ["schedule.txt"]
+			"args": [
+				"schedule.txt"
+			]
 		},
 		{
 			"name": "pickArgs",
@@ -25,7 +34,9 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/html_translator.py",
 			"console": "integratedTerminal",
-			"args": ["${command:pickArgs}"]
+			"args": [
+				"${command:pickArgs}"
+			]
 		}
 	]
 }

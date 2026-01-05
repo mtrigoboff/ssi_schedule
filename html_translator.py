@@ -19,19 +19,18 @@ class SSI_Class:
 		self._title = after_first
 		self._empty = False
 
+	_presenter_specs = {
+		'Tour':         ('Tour Guide:',     'after_first.split(" ", 1)[1]'),
+		'Moderator':    ('Moderator:',      'after_first'),
+		'Organizer':    ('Organizer:',      'after_first'),
+		'Host':         ('Host:',           'after_first')
+	}
+
 	def set_presenters(self, first_word, after_first):
-		if first_word == 'Tour':
-			self._presenter_title = "Tour Guide:"
-			self._presenters = after_first.split(' ', 1)[1]
-		elif first_word == 'Moderator':
-			self._presenter_title = "Moderator:"
-			self._presenters = after_first
-		elif first_word == 'Organizer':
-			self._presenter_title = "Organizer:"
-			self._presenters = after_first
-		elif first_word == 'Host':
-			self._presenter_title = "Host:"
-			self._presenters = after_first
+		presenter_spec = SSI_Class._presenter_specs.get(first_word)
+		if presenter_spec is not None:
+			self._presenter_title = presenter_spec[0]
+			self._presenters = eval(presenter_spec)[1]
 		else:
 			self._presenter_title = first_word
 			self._presenters = after_first
@@ -156,14 +155,15 @@ def translate(input_file_name):
 
 		first_word, after_first = line.split(' ', 1)
 
-		if first_word.lower() in ('week', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'):
+		first_word_lower = first_word.lower()
+		if first_word_lower in ('week', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'):
 			if not ssi_class.is_empty():
 				class_list.add(ssi_class)
 				ssi_class = SSI_Class()
 			class_list.add(line)
 			continue
 
-		if first_word.lower() in ssi_class_attrs:
+		if first_word_lower in ssi_class_attrs:
 			ssi_class_attrs[first_word.lower()](ssi_class, first_word, after_first)
 		else:
 			write_skipped_line(line_no, line, skipped_lines_file)
