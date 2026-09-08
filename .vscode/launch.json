@@ -15,24 +15,44 @@
 			"name": "no args",
 			"type": "debugpy",
 			"request": "launch",
-			"program": "${workspaceFolder}/html_translator.py",
+			"program": "${workspaceFolder}/schedule_formatter.py",
 			"console": "integratedTerminal"
 		},
 		{
-			"name": "sys.argv",
+			"name": "csv 2026",
 			"type": "debugpy",
 			"request": "launch",
-			"program": "${workspaceFolder}/html_translator.py",
+			"program": "${workspaceFolder}/schedule_formatter.py",
 			"console": "integratedTerminal",
 			"args": [
-				"schedule.txt"
+				"-csv", "2026 Fall Class Schedule.csv"
 			]
 		},
 		{
-			"name": "pickArgs",
+			"name": "csv",
 			"type": "debugpy",
 			"request": "launch",
-			"program": "${workspaceFolder}/html_translator.py",
+			"program": "${workspaceFolder}/schedule_formatter.py",
+			"console": "integratedTerminal",
+			"args": [
+				"-csv", "${command:pickArgs}"
+			]
+		},
+		{
+			"name": "docx",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/schedule_formatter.py",
+			"console": "integratedTerminal",
+			"args": [
+				"docx", "${command:pickArgs}"
+			]
+		},
+		{
+			"name": "enter args",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/schedule_formatter.py",
 			"console": "integratedTerminal",
 			"args": [
 				"${command:pickArgs}"

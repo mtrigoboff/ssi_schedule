@@ -126,7 +126,7 @@ ssi_class_attrs = {
 def write_skipped_line(line_no, line, skipped_lines_file):
 	print(f'{str(line_no + 1):>3s}: {line}', file=skipped_lines_file)
 
-def translate(input_file_name):
+def format_word_text(input_file_name):
 
 	basename = op.splitext(op.basename(input_file_name))[0]
 	html_file_name = basename + '.html'
@@ -179,9 +179,20 @@ def translate(input_file_name):
 
 	return (html_file_name, skipped_lines_file_name)
 
+def format_csv(input_file_name):
+	print(f'-csv "{input_file_name}"')
+	pass
+
+usage_str = 'usage: schedule_formatter [-csv|-docx] input_file'
+
 # for use as a Python script -- not used from Jupyter notebook
 if __name__ == '__main__':
-	if len(sys.argv) == 2:
-		translate(sys.argv[1])
+	if len(sys.argv) == 3:
+		if sys.argv[1] == '-csv':
+			format_csv(sys.argv[2])
+		elif sys.argv[1] == '-docx':
+			format_word_text(sys.argv[2])
+		else:
+			print(usage_str)
 	else:
-		translate('schedule.txt')
+		print(usage_str)

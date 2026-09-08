@@ -1,4 +1,6 @@
 *.txt
 *.html
+*.csv
+*.tsv
 print_g2ms.py
 Print_Genos2_MIDI_Settings.ipynb
