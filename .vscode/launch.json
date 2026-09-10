@@ -45,7 +45,7 @@
 			"program": "${workspaceFolder}/schedule_formatter.py",
 			"console": "integratedTerminal",
 			"args": [
-				"docx", "${command:pickArgs}"
+				"-docx", "${command:pickArgs}"
 			]
 		},
 		{
