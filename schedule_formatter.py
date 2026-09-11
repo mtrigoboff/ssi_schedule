@@ -179,16 +179,23 @@ def format_word_text(input_file_name):
 
 	return (html_file_name, skipped_lines_file_name)
 
-def format_csv(input_file_name):
-	print(f'-csv "{input_file_name}"')
-	pass
+def format_csv(in_file_name):
+	n_lines = 0
+	in_file = open(in_file_name, mode='r', encoding='utf-8')
+	lines = in_file.readlines()
+	for line in lines:
+		row = line.strip().split('\t')
+		if row[0][0:2] == 'Wk':
+			n_lines += 1
+	in_file.close()
+	print(n_lines)
 
 usage_str = 'usage: schedule_formatter [-csv|-docx] input_file'
 
 # for use as a Python script -- not used from Jupyter notebook
 if __name__ == '__main__':
 	if len(sys.argv) == 3:
-		if sys.argv[1] == '-csv':
+		if sys.argv[1] == '-tsv':
 			format_csv(sys.argv[2])
 		elif sys.argv[1] == '-docx':
 			format_word_text(sys.argv[2])
