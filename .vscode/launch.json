@@ -19,6 +19,16 @@
 			"console": "integratedTerminal"
 		},
 		{
+			"name": "csv 2026",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/schedule_formatter.py",
+			"console": "integratedTerminal",
+			"args": [
+				"-csv", "2026 Fall Class Schedule.csv"
+			]
+		},
+		{
 			"name": "tsv 2026",
 			"type": "debugpy",
 			"request": "launch",
