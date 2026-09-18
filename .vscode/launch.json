@@ -5,11 +5,12 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "current python file",
+			"name": "csv",
 			"type": "debugpy",
 			"request": "launch",
-			"program": "${file}",
-			"console": "integratedTerminal"
+			"program": "${workspaceFolder}/schedule_formatter.py",
+			"console": "integratedTerminal",
+			"args": [ "SSI New Spreadsheet.csv" ]
 		},
 		{
 			"name": "no args",
@@ -19,54 +20,19 @@
 			"console": "integratedTerminal"
 		},
 		{
-			"name": "csv 2026",
-			"type": "debugpy",
-			"request": "launch",
-			"program": "${workspaceFolder}/schedule_formatter.py",
-			"console": "integratedTerminal",
-			"args": [
-				"-csv", "2026 Fall Class Schedule.csv"
-			]
-		},
-		{
-			"name": "tsv 2026",
-			"type": "debugpy",
-			"request": "launch",
-			"program": "${workspaceFolder}/schedule_formatter.py",
-			"console": "integratedTerminal",
-			"args": [
-				"-tsv", "2026 Fall Class Schedule.tsv"
-			]
-		},
-		{
-			"name": "csv",
-			"type": "debugpy",
-			"request": "launch",
-			"program": "${workspaceFolder}/schedule_formatter.py",
-			"console": "integratedTerminal",
-			"args": [
-				"-csv", "${command:pickArgs}"
-			]
-		},
-		{
-			"name": "docx",
-			"type": "debugpy",
-			"request": "launch",
-			"program": "${workspaceFolder}/schedule_formatter.py",
-			"console": "integratedTerminal",
-			"args": [
-				"-docx", "${command:pickArgs}"
-			]
-		},
-		{
 			"name": "enter args",
 			"type": "debugpy",
 			"request": "launch",
 			"program": "${workspaceFolder}/schedule_formatter.py",
 			"console": "integratedTerminal",
-			"args": [
-				"${command:pickArgs}"
-			]
+			"args": [ "${command:pickArgs}" ]
+		},
+		{
+			"name": "current python file",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${file}",
+			"console": "integratedTerminal"
 		}
 	]
 }

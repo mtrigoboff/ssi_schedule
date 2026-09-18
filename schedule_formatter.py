@@ -1,88 +1,38 @@
-import os.path as op, string, sys
+import csv, os.path as op, string, sys
+from collections import UserDict
 
-class SSI_Class:
-
-	def __init__(self):
-		self._empty = True
-		self._title = None
-		self._presenter_title = None
-		self._presenters = None
-		self._location = None
-		self._description = None
-		self._bios = []
-		self._extra = []
-
-	def is_empty(self):
-		return self._empty
-	
-	def set_title(self, first_word, after_first):
-		self._title = after_first
-		self._empty = False
-
-	_presenter_specs = {
-		'tour':         ('Tour Guide:',     'after_first.split(" ", 1)[1]'),
-		'moderator':    ('Moderator:',      'after_first'),
-		'organizer':    ('Organizer:',      'after_first'),
-		'host':         ('Host:',           'after_first')
-	}
-
-	def set_presenters(self, first_word, after_first):
-		presenter_spec = SSI_Class._presenter_specs.get(first_word.lower())
-			# get() returns None instead of raising KeyError if key not present
-		if presenter_spec is not None:
-			self._presenter_title = presenter_spec[0]
-			self._presenters = eval(presenter_spec)[1]
-		else:
-			self._presenter_title = first_word
-			self._presenters = after_first
-		self._empty = False
-
-	def set_location(self, first_word, after_first):
-		self._location = after_first
-		self._empty = False
-
-	def set_description(self, first_word, after_first):
-		self._description = after_first.split(' ', 1)[1]
-		self._empty = False
-
-	def add_bio(self, first_word, after_first):
-		self._bios.append(after_first)
-		self._empty = False
-
-	def add_extra(self, first_word, after_first):
-		self._extra.append(after_first)
-		self._empty = False
+class SSI_Class(UserDict):
 
 	def __str__(self):
 		ret_str = ''
-		if self._title is not None:
-			ret_str += '<b>Title</b>: ' + self._title + '<br />\n'
-		if self._presenter_title is not None:
-			ret_str += '<b>' + self._presenter_title[:-1] + '</b>: ' + self._presenters + '<br />\n'
-		if self._location is not None:
-			ret_str += '<b>Location</b>: ' + self._location + '<br />\n'
-		if self._description is not None:
-			ret_str += '<b>Class Description</b>: ' + self._description + '<br />\n'
-		if self._extra:
+		if self.data._title is not None:
+			ret_str += '<b>Title</b>: ' + self.data._title + '<br />\n'
+		if self.data._presenter_title is not None:
+			ret_str += '<b>' + self.data._presenter_title[:-1] + '</b>: ' + self.data._presenters + '<br />\n'
+		if self.data._location is not None:
+			ret_str += '<b>Location</b>: ' + self.data._location + '<br />\n'
+		if self.data._description is not None:
+			ret_str += '<b>Class Description</b>: ' + self.data._description + '<br />\n'
+		if self.data._extra:
 			ret_str += '<br />\n'
-			if len(self._extra) == 1:
-				colon = self._extra[0].find(':')
+			if len(self.data._extra) == 1:
+				colon = self.data._extra[0].find(':')
 				if colon != -1:
-					title = self._extra[0][0:colon]
-					rest_of_line = self._extra[0][colon + 1:].strip()
+					title = self.data._extra[0][0:colon]
+					rest_of_line = self.data._extra[0][colon + 1:].strip()
 					ret_str += '<b>' + title + '</b>: ' + rest_of_line
 				else:
-					ret_str += self._extra[0]
+					ret_str += self.data._extra[0]
 			else:
-				for extra in self._extra:
+				for extra in self.data._extra:
 					ret_str += extra
 			ret_str += '<br />\n'
-		if self._bios:
-			if len(self._bios) == 1:
-				ret_str += '<br /><b>Bio</b>:' + ' ' + self._bios[0] + '<br />\n'
+		if self.data._bios:
+			if len(self.data._bios) == 1:
+				ret_str += '<br /><b>Bio</b>:' + ' ' + self.data._bios[0] + '<br />\n'
 			else:
 				ret_str += '<br /><b>Bios</b>:\n'
-				for bio in self._bios:
+				for bio in self.data._bios:
 					ret_str += '<br />' + bio + '<br />\n'
 		return ret_str + '<br />\n'
 
@@ -107,6 +57,7 @@ class SSI_ClassList:
 			ret_str += '\n'
 		return ret_str
 
+'''
 # dictionary for routing a line to the appropriate SSI_Class attribute
 ssi_class_attrs = {
 	'title:':		SSI_Class.set_title,
@@ -122,93 +73,29 @@ ssi_class_attrs = {
 	'bio:':			SSI_Class.add_bio,
 	'bios:':		SSI_Class.add_bio,
 }
+'''
 
-def write_skipped_line(line_no, line, skipped_lines_file):
-	print(f'{str(line_no + 1):>3s}: {line}', file=skipped_lines_file)
+def format_csv(csv_file_name):
 
-def format_word_text(input_file_name):
+	classes = []
+	html_file_name = op.splitext(csv_file_name)[0] + '.html'
+	html_file = open(html_file_name, mode='w', encoding='utf-8')
+	csv_file = open(csv_file_name, mode='r', newline='', encoding='utf-8-sig')
+	csv_reader = csv.DictReader(csv_file)
+	for row in csv_reader:
+		if row.get('Date') != '':
+			classes.append(SSI_Class(row))
+			print(SSI_Class(row), file=html_file)
 
-	basename = op.splitext(op.basename(input_file_name))[0]
-	html_file_name = basename + '.html'
-	skipped_lines_file_name = basename + '.skipped_lines.txt'
+	print(len(classes))
+	csv_file.close()
+	html_file.close()
 
-	class_list = SSI_ClassList()
-	ssi_class = SSI_Class()
-
-	with open(input_file_name, 'r') as sched_txt:
-		lines = sched_txt.readlines()
-
-	skipped_lines_file = open(skipped_lines_file_name, 'w')
-
-	line_no = -1					# help with debugging
-	for line in lines:
-		line_no += 1
-		line = line.strip()
-
-		# filter lines we want to skip
-		if len(line) == 0														\
-				or line[0] in '?o_-\n'											\
-				or line.startswith('NOTES:') or line.startswith('Notes:')		\
-				or line[0] == '.' and len(line) == 1							\
-				or ord(line[0]) == 8211 or ord(line[0]) == 8212:	# en, em dash
-			write_skipped_line(line_no, line, skipped_lines_file)
-			continue
-
-		first_word, after_first = line.split(' ', 1)
-
-		first_word_lower = first_word.lower()
-		if first_word_lower in ('week', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'):
-			if not ssi_class.is_empty():
-				class_list.add(ssi_class)
-				ssi_class = SSI_Class()
-			class_list.add(line)
-			continue
-
-		if first_word_lower in ssi_class_attrs:
-			ssi_class_attrs[first_word.lower()](ssi_class, first_word, after_first)
-		else:
-			write_skipped_line(line_no, line, skipped_lines_file)
-			continue
-
-	class_list.add(ssi_class)
-
-	with open(html_file_name, 'w') as html_file:
-		print(class_list, file=html_file)
-
-	skipped_lines_file.close()
-
-	return (html_file_name, skipped_lines_file_name)
-
-def format_csv(in_file_name):
-	n_lines = 0
-	in_file = open(in_file_name, mode='r', encoding='utf-8')
-	class_lines = []
-	lines = in_file.readlines()
-	for line in lines:
-		row = line.strip().split(',')
-		if row[0][0:2] == 'Wk':
-			class_lines.append(row)
-			n_lines += 1
-	in_file.close()
-	out_file = open('schedule.csv', mode='w', encoding='utf-8')
-	for class_line in class_lines:
-		for cell in class_line:
-			print(f'{cell}, ', file=out_file, end='')
-		print(file=out_file)
-	out_file.close()
-
-	print(n_lines)
-
-usage_str = 'usage: schedule_formatter [-csv|-docx] input_file'
+usage_str = 'usage: schedule_formatter input_file'
 
 # for use as a Python script -- not used from Jupyter notebook
 if __name__ == '__main__':
-	if len(sys.argv) == 3:
-		if sys.argv[1] in ('-csv', '-tsv'):
-			format_csv(sys.argv[2])
-		elif sys.argv[1] == '-docx':
-			format_word_text(sys.argv[2])
-		else:
-			print(usage_str)
+	if len(sys.argv) == 2:
+		format_csv(sys.argv[1])
 	else:
 		print(usage_str)
