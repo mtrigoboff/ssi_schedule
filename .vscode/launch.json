@@ -5,12 +5,12 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "csv",
+			"name": "test",
 			"type": "debugpy",
 			"request": "launch",
 			"program": "${workspaceFolder}/schedule_formatter.py",
 			"console": "integratedTerminal",
-			"args": [ "SSI New Spreadsheet.csv" ]
+			"args": [ "test.csv" ]
 		},
 		{
 			"name": "no args",

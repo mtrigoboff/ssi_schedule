@@ -1,7 +1,5 @@
 *.txt
 *.html
-*.csv
-*.tsv
 *.xlsx
 .DS_Store
 print_g2ms.py
