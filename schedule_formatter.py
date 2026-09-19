@@ -4,37 +4,29 @@ from collections import UserDict
 class SSI_Class(UserDict):
 
 	def __str__(self):
+		item = self.data
 		ret_str = ''
-		if self.data._title is not None:
-			ret_str += '<b>Title</b>: ' + self.data._title + '<br />\n'
-		if self.data._presenter_title is not None:
-			ret_str += '<b>' + self.data._presenter_title[:-1] + '</b>: ' + self.data._presenters + '<br />\n'
-		if self.data._location is not None:
-			ret_str += '<b>Location</b>: ' + self.data._location + '<br />\n'
-		if self.data._description is not None:
-			ret_str += '<b>Class Description</b>: ' + self.data._description + '<br />\n'
-		if self.data._extra:
-			ret_str += '<br />\n'
-			if len(self.data._extra) == 1:
-				colon = self.data._extra[0].find(':')
-				if colon != -1:
-					title = self.data._extra[0][0:colon]
-					rest_of_line = self.data._extra[0][colon + 1:].strip()
-					ret_str += '<b>' + title + '</b>: ' + rest_of_line
-				else:
-					ret_str += self.data._extra[0]
-			else:
-				for extra in self.data._extra:
-					ret_str += extra
-			ret_str += '<br />\n'
-		if self.data._bios:
-			if len(self.data._bios) == 1:
-				ret_str += '<br /><b>Bio</b>:' + ' ' + self.data._bios[0] + '<br />\n'
+		if item['Title'] != '':
+			ret_str += '<b>Title</b>: ' + item['Title'] + '<br />\n'
+		if item['HostType'] != '':
+			ret_str += '<b>' + item['HostType'] + '</b>: ' + item['Host'] + '<br />\n'
+		if item['Location'] != '':
+			ret_str += '<b>Location</b>: ' + item['Location'] + '<br />\n'
+		if item['Description'] != '':
+			ret_str += '<b>Class Description</b>: ' + item['Description'] + '<br />\n'
+		if item['Bio'] != '':
+			ret_str += '<b>Bio</b>: ' + item['Bio'] + '<br />\n'
+
+		return ret_str + '<br />\n'
+
+'''
+			if len(item._bios) == 1:
+				ret_str += '<br /><b>Bio</b>:' + ' ' + item._bios[0] + '<br />\n'
 			else:
 				ret_str += '<br /><b>Bios</b>:\n'
-				for bio in self.data._bios:
+				for bio in item._bios:
 					ret_str += '<br />' + bio + '<br />\n'
-		return ret_str + '<br />\n'
+'''
 
 class SSI_ClassList:
 
