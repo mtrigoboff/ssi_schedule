@@ -9,42 +9,40 @@ class SSI_Class(UserDict):
 		item = self.data
 		ret_str = ''
 		if item['Start Time'] != '':
-			start_time = datetime.strptime(item['Start Time'], '%I:%M %p')
-			end_time = start_time + timedelta(hours=float(item['Duration']))
-			ret_str += f'<i><u>'
+			ret_str += '<i><u>'
 			ret_str += f'{item['Weekday']} {item['Month']} {item['Day']} &ndash; '
-			ret_str += f'{start_time.strftime('%I:%M %p')} &ndash; '
-			ret_str += f'{end_time.strftime('%I:%M %p')}'
-			ret_str += f'</u></i><br /><br />\n'
+			ret_str += f'{item['Start Time']} &ndash; {item['End Time']}'
+			ret_str += '</u></i><br /><br />\n'
 		if item['Title'] != '':
-			if item['Location'] != '':					# special case for holidays, etc
-				ret_str += '<b>Title</b>: '
-			ret_str += item['Title'] + '<br />\n'
+			if item['Location'] is not '':					# special case for holidays, etc
+				ret_str += f'<b>Title</b>: {item['Title']}<br />\n'
+			else:
+				ret_str += f'{item['Title']}<br />\n'
 		if item['HostType'] != '':
 			host = item['Host']
-			ret_str += '<b>' + item['HostType'] + '</b>: '
+			ret_str += f'<b>{item['HostType']}</b>: '
 			if separator in host:
 				hosts = host.split(separator)
 				ret_str += hosts[0]
 				for host in hosts[1:]:
-					ret_str += ', ' + host
+					ret_str += f', {host}'
 				ret_str += '<br />\n'
 			else:
-				ret_str += host + '<br />\n'
+				ret_str += f'{host}<br />\n'
 		if item['Location'] != '':
-			ret_str += '<b>Location</b>: ' + item['Location'] + '<br />\n'
+			ret_str += f'<b>Location</b>: {item['Location']}<br />\n'
 		if item['Description'] != '':
-			ret_str += '<b>Description</b>: ' + item['Description'] + '<br />\n'
+			ret_str += f'<b>Description</b>: {item['Description']}<br />\n'
 		if item['Bio'] != '':
 			bio = item['Bio']
 			if separator in bio:
 				ret_str += '<b>Bios</b>:<br />'
 				bios = bio.split(separator)
-				ret_str += bios[0] + '<br />\n'
+				ret_str += f'{bios[0]}<br />\n'
 				for bio in bios[1:]:
-					ret_str += '&mdash; <br />' + bio + '<br />'
+					ret_str += f'&mdash; <br />{bio}<br />'
 			else:
-				ret_str += '<b>Bio</b>: ' + item['Bio'] + '<br />\n'
+				ret_str += f'<b>Bio</b>: {item['Bio']}<br />\n'
 
 		return ret_str + '<br />\n'
 
