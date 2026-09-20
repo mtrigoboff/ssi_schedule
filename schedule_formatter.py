@@ -63,7 +63,7 @@ def format_csv(csv_file_name):
 
 usage_str = 'usage: schedule_formatter input_file'
 
-# for use as a Python script -- not used from Jupyter notebook
+# for use as a Python script and in VS Code -- not used from Jupyter notebook
 if __name__ == '__main__':
 	if len(sys.argv) == 2:
 		format_csv(sys.argv[1])
