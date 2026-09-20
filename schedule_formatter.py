@@ -1,5 +1,6 @@
 import csv, os.path as op, string, sys
 from collections import UserDict
+from datetime import datetime, timedelta
 
 class SSI_Class(UserDict):
 
@@ -7,6 +8,14 @@ class SSI_Class(UserDict):
 		separator = '|'
 		item = self.data
 		ret_str = ''
+		if item['Start Time'] != '':
+			start_time = datetime.strptime(item['Start Time'], '%I:%M %p')
+			end_time = start_time + timedelta(hours=float(item['Duration']))
+			ret_str += f'<i><u>'
+			ret_str += f'{item['Weekday']} {item['Month']} {item['Day']} &ndash; '
+			ret_str += f'{start_time.strftime('%I:%M %p')} &ndash; '
+			ret_str += f'{end_time.strftime('%I:%M %p')}'
+			ret_str += f'</u></i><br /><br />\n'
 		if item['Title'] != '':
 			if item['Location'] != '':					# special case for holidays, etc
 				ret_str += '<b>Title</b>: '
