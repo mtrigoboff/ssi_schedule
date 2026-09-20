@@ -14,9 +14,9 @@ class SSI_Class(UserDict):
 			ret_str += f'{item['Start Time']} &ndash; {item['End Time']}'
 			ret_str += '</u></i><br /><br />\n'
 		if item['Title'] != '':
-			if item['Location'] is not '':					# special case for holidays, etc
+			if item['Location'] is not '':
 				ret_str += f'<b>Title</b>: {item['Title']}<br />\n'
-			else:
+			else:										# special case for holidays, etc
 				ret_str += f'{item['Title']}<br />\n'
 		if item['HostType'] != '':
 			host = item['Host']
