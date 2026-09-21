@@ -18,23 +18,23 @@ class SSI_Class(UserDict):
 				ret_str += f'{item['Title']}<br />\n'
 			else:
 				ret_str += f'<b>Title</b>: {item['Title']}<br />\n'
-		if item['HostType'] != '':
-			host = item['Host']
-			ret_str += f'<b>{item['HostType']}</b>: '
-			if separator in host:
-				hosts = host.split(separator)
-				ret_str += hosts[0]
-				for host in hosts[1:]:
-					ret_str += f', {host}'
+		if item['Speaker Type'] != '':
+			speaker = item['Speaker']
+			ret_str += f'<b>{item['Speaker Type']}</b>: '
+			if separator in speaker:
+				speakers = speaker.split(separator)
+				ret_str += speakers[0]
+				for speaker in speakers[1:]:
+					ret_str += f', {speaker}'
 				ret_str += '<br />\n'
 			else:
-				ret_str += f'{host}<br />\n'
+				ret_str += f'{speaker}<br />\n'
 		if item['Location'] != '':
 			ret_str += f'<b>Location</b>: {item['Location']}<br />\n'
 		if item['Description'] != '':
 			ret_str += f'<b>Description</b>: {item['Description']}<br />\n'
-		if item['Bio'] != '':
-			bio = item['Bio']
+		if item['Speaker Bio'] != '':
+			bio = item['Speaker Bio']
 			if separator in bio:
 				ret_str += '<b>Bios</b>:<br />'
 				bios = bio.split(separator)
@@ -42,7 +42,7 @@ class SSI_Class(UserDict):
 				for bio in bios[1:]:
 					ret_str += f'&mdash; <br />{bio}<br />'
 			else:
-				ret_str += f'<b>Bio</b>: {item['Bio']}<br />\n'
+				ret_str += f'<b>Bio</b>: {item['Speaker Bio']}<br />\n'
 
 		return ret_str + '<br />\n'
 
