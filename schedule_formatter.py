@@ -1,13 +1,30 @@
-import csv, os.path as op, string, sys
+import csv, datetime as dt, os.path as op, string, sys
 from collections import UserDict
-from datetime import datetime, timedelta
 
+first_item = True
+current_week = -1
 class SSI_Class(UserDict):
 
+	def week_hdr(date):
+		week = dt.datetime.strptime(date, '%m/%d/%y').isocalendar()[1]
+		return 'xxxxx<br />\n'
+
 	def __str__(self):
+		global first_item, first_week, current_week
+
 		separator = '|'
+
 		item = self.data
+		if first_item:
+			first_week = dt.datetime.strptime(item['Date'], '%m/%d/%y').isocalendar()[1]
+			first_item = False
+
 		ret_str = ''
+		week = dt.datetime.strptime(item['Date'], '%m/%d/%y').isocalendar()[1]
+		if week > current_week:
+			ret_str += SSI_Class.week_hdr(item['Date'])
+			current_week = week
+
 		if item['Start Time'] != '':
 			ret_str += '<i><u>'
 			ret_str += f'{item['Weekday']} {item['Month']} {item['Day']} &ndash; '
@@ -47,7 +64,6 @@ class SSI_Class(UserDict):
 		return ret_str + '<br />\n'
 
 def format_csv(csv_file_name):
-
 	html_file_name = op.splitext(csv_file_name)[0] + '.html'
 	html_file = open(html_file_name, mode='w', encoding='utf-8')
 
