@@ -2,12 +2,30 @@ import csv, os.path as op, string, sys
 from collections import UserDict
 from datetime import datetime, timedelta
 
+first_item = True
+current_week = -1
+
 class SSI_Class(UserDict):
 
+	def week_hdr(month, day):
+		return f'<b><u>Week of {month} {day}</u></b><br /><br />\n'
+
 	def __str__(self):
+		global first_item, first_week, current_week
+
 		separator = '|'
+
 		item = self.data
+		if first_item:
+			first_week = item['Week']
+			first_item = False
+
 		ret_str = ''
+		week = int(item['Week'])
+		if week > current_week:
+			ret_str += SSI_Class.week_hdr(item['Month'], item['Day'])
+			current_week = week
+
 		if item['Start Time'] != '':
 			ret_str += '<i><u>'
 			ret_str += f'{item['Weekday']} {item['Month']} {item['Day']} &ndash; '
