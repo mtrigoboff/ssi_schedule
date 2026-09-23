@@ -78,10 +78,11 @@ def format_csv(csv_file_name):
 
 	csv_file.close()
 	html_file.close()
-
-usage_str = 'usage: schedule_formatter input_file'
+	return html_file_name
 
 # for use as a Python script and in VS Code -- not used from Jupyter notebook
+usage_str = 'usage: schedule_formatter input_file'
+
 if __name__ == '__main__':
 	if len(sys.argv) == 2:
 		format_csv(sys.argv[1])
