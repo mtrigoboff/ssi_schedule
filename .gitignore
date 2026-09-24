@@ -1,5 +1,6 @@
 *.txt
 *.html
+run/*
 .DS_Store
 print_g2ms.py
 Print_Genos2_MIDI_Settings.ipynb
