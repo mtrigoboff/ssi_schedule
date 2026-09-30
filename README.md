@@ -1,4 +1,4 @@
-## Senior Studies Institute Schedule Translator
+## Senior Studies Institute Schedule Formatter
 
 This code takes as input a csv file saved from an SSI Excel spreadsheet and produces a formatted HTML file.
 
